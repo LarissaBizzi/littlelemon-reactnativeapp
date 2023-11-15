@@ -1,22 +1,19 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { ScrollView, Image, Text, StyleSheet, TextInput, Pressable, Alert } from 'react-native';
+import { ScrollView, Image, Text, StyleSheet, TextInput, Alert, Pressable } from 'react-native';
 import { validateEmail } from '../utils';
 
 
 export default function SubscribeScreen () {
   const [email, onChangeEmail] = useState('');
-  const createAlert = () =>
-    Alert.alert('Thanks for subscribing, stay tuned!', '', [
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
-    ]);
+  const validEmail = validateEmail(email);
 
   return (
   <ScrollView style={styles.container}>
     <Image
       resizeMode={'contain'}
       style={styles.logo}
-      source={require("../assets/little-lemon-logo.png")}
+      source={require("../assets/little-lemon-logo-grey.png")}
       accessible={true}
       accessibilityLabel='Little Lemon logo'
     />
@@ -30,13 +27,13 @@ export default function SubscribeScreen () {
         placeholder='email'
         keyboardType={'email-address'}
         clearButtonMode='always'
-        validateEmail={email}
+        textContentType='emailAddress'
 />
     <Pressable
-        title={'Alert'}
-        onPress={createAlert}
+        onPress={() => {Alert.alert('Thanks for subscribing, stay tuned!')}}
+        disabled={!validEmail}
         style={styles.button}>
-         <Text style={styles.buttonText}>Subscribe</Text>
+        <Text style={styles.buttonText}>Subscribe</Text>
     </Pressable>
 </ScrollView>
 );
